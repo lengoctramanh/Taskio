@@ -9,6 +9,12 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
+      - PORT=3000
+      - DATABASE_URL=postgresql://taskio_user:taskio_password@postgres:5432/taskio_db?schema=public
+      - JWT_SECRET=taskio_secret_key
+      - JWT_EXPIRES_IN=7d
+    depends_on:
+      - postgres
 
   frontend:
     build:
@@ -20,5 +26,22 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
+      - VITE_API_URL=http://localhost:3000
     depends_on:
       - backend
+
+  postgres:
+    image: postgres:16
+    container_name: taskio_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: taskio_user
+      POSTGRES_PASSWORD: taskio_password
+      POSTGRES_DB: taskio_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - taskio_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  taskio_postgres_data:
