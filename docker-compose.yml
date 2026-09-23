@@ -7,12 +7,10 @@ services:
     volumes:
       - ./backend:/app
       - /app/node_modules
+    env_file:
+      - ./backend/.env
     environment:
       - NODE_ENV=development
-      - PORT=3000
-      - DATABASE_URL=postgresql://taskio_user:taskio_password@postgres:5432/taskio_db?schema=public
-      - JWT_SECRET=taskio_secret_key
-      - JWT_EXPIRES_IN=7d
     depends_on:
       - postgres
 
@@ -38,6 +36,8 @@ services:
       POSTGRES_USER: taskio_user
       POSTGRES_PASSWORD: taskio_password
       POSTGRES_DB: taskio_db
+      TZ: UTC
+      PGTZ: UTC
     ports:
       - "5432:5432"
     volumes:
