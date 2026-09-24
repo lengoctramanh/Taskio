@@ -1,28 +1,22 @@
 const express = require("express");
 
+const authMiddleware = require("../middleware/auth.middleware");
+const adminMiddleware = require("../middleware/admin.middleware");
+
+const {
+  getUsers,
+  updateUserStatus,
+  updateUserRole,
+} = require("../controllers/admin.controller");
+
 const router = express.Router();
 
-router.get("/users", (req, res) => {
-  res.json({
-    message: "Get users successfully",
-    data: []
-  });
-});
+router.use(authMiddleware, adminMiddleware);
 
-router.put("/users/:id/status", (req, res) => {
-  res.json({
-    message: "User status updated successfully",
-    id: req.params.id,
-    data: req.body
-  });
-});
+router.get("/users", getUsers);
 
-router.put("/users/:id/role", (req, res) => {
-  res.json({
-    message: "User role updated successfully",
-    id: req.params.id,
-    data: req.body
-  });
-});
+router.put("/users/:id/status", updateUserStatus);
+
+router.put("/users/:id/role", updateUserRole);
 
 module.exports = router;
