@@ -1,39 +1,19 @@
 const express = require("express");
 
+const {
+  register,
+  login,
+  me,
+} = require("../controllers/auth.controller");
+
+const authMiddleware = require("../middleware/auth.middleware");
+
 const router = express.Router();
 
-router.post("/register", (req, res) => {
-  const { name, email, password } = req.body;
+router.post("/register", register);
 
-  res.status(201).json({
-    message: "Register successfully",
-    data: {
-      id: 1,
-      name,
-      email
-    }
-  });
-});
+router.post("/login", login);
 
-router.post("/login", (req, res) => {
-  const { email } = req.body;
-
-  res.json({
-    message: "Login successfully",
-    token: "fake-jwt-token",
-    user: {
-      id: 1,
-      email
-    }
-  });
-});
-
-router.get("/me", (req, res) => {
-  res.json({
-    id: 1,
-    name: "Demo User",
-    email: "demo@gmail.com"
-  });
-});
+router.get("/me", authMiddleware, me);
 
 module.exports = router;

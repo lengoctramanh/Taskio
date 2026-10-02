@@ -21,7 +21,7 @@ function Login() {
     event.preventDefault()
 
     const response = await axiosClient.post('/api/auth/login', form)
-    saveToken(response.data.accessToken)
+    saveToken(response.data.token)
     navigate('/')
   }
 
