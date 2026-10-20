@@ -24,4 +24,14 @@ app.get("/", (req, res) => {
   res.json({ message: "Taskio API is running" });
 });
 
+app.use((error, req, res, next) => {
+  console.error(error);
+
+  if (res.headersSent) {
+    return next(error);
+  }
+
+  return res.status(500).json({ message: "Lỗi server" });
+});
+
 module.exports = app;
