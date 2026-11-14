@@ -104,6 +104,7 @@ async function createCard(req, res, next) {
     if (error.code === "P2003") {
       return res.status(404).json({ message: "Không tìm thấy list" });
     }
+
     next(error);
   }
 }
@@ -177,13 +178,17 @@ async function updateCard(req, res, next) {
       return res.status(404).json({ message: result.error });
     }
 
-    return res.json({ data: result.card });
+    return res.json({
+      message: "Cập nhật card thành công",
+      data: result.card,
+    });
   } catch (error) {
     if (error.code === "P2025" || error.code === "P2003") {
       return res.status(404).json({
         message: "Không tìm thấy card hoặc list đích",
       });
     }
+
     next(error);
   }
 }
@@ -199,6 +204,7 @@ async function deleteCard(req, res, next) {
     if (error.code === "P2025") {
       return res.status(404).json({ message: "Không tìm thấy card" });
     }
+
     next(error);
   }
 }

@@ -102,7 +102,10 @@ async function updateBoard(req, res, next) {
       data,
     });
 
-    return res.json({ data: board });
+    return res.json({
+      message: "Cập nhật board thành công",
+      data: board,
+    });
   } catch (error) {
     if (error.code === "P2025") {
       return res.status(404).json({ message: "Không tìm thấy board" });
