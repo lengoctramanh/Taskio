@@ -130,7 +130,10 @@ async function updateList(req, res, next) {
       data,
     });
 
-    return res.json({ data: list });
+    return res.json({
+      message: "Cập nhật list thành công",
+      data: list,
+    });
   } catch (error) {
     if (error.code === "P2025") {
       return res.status(404).json({ message: "Không tìm thấy list" });
